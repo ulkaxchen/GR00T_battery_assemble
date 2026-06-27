@@ -76,9 +76,11 @@ where = ["."]
 include = ["gr00t*"]
 
 [tool.uv]
+# This fork's default training path runs on x86_64 Linux. Keeping aarch64 in the
+# required environments makes `uv sync` inspect local LFS wheels even on x86
+# machines, which fails after a clone if Git LFS objects have not been hydrated.
 required-environments = [
     "sys_platform == 'linux' and platform_machine == 'x86_64'",
-    "sys_platform == 'linux' and platform_machine == 'aarch64'",
 ]
 
 [tool.uv.sources]
