@@ -37,11 +37,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Pull LFS objects
-        run: git lfs pull
 
       - name: Setup Python environment
         uses: ./.github/actions/setup-venv
@@ -64,5 +59,6 @@ jobs:
       - name: Clean up
         if: always()
         run: |
+          test -f .venv/bin/activate || exit 0
           . .venv/bin/activate
           pip uninstall -y gr00t

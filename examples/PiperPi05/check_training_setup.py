@@ -66,9 +66,7 @@ def _failures_for_modality(config, modality_meta: dict) -> list[str]:
             continue
         annotation_key = language_key.replace("annotation.", "", 1)
         if annotation_key not in modality_meta.get("annotation", {}):
-            failures.append(
-                f"annotation key missing from meta/modality.json: {annotation_key}"
-            )
+            failures.append(f"annotation key missing from meta/modality.json: {annotation_key}")
 
     return failures
 
