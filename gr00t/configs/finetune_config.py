@@ -101,6 +101,12 @@ class FinetuneConfig:
     preprocessing is disabled.
     """
 
+    action_horizon: int | None = None
+    """
+    Optional override for the model and modality action horizon.
+    Leave unset to use the model default.
+    """
+
     extra_augmentation_config: str | None = None
     """
     JSON string for extra image augmentations (mask-based and others).
