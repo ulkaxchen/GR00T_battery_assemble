@@ -52,9 +52,6 @@ if __name__ == "__main__":
     ft_config.embodiment_tag = EmbodimentTag.resolve(ft_config.embodiment_tag)
     embodiment_tag = ft_config.embodiment_tag.value
 
-    if ft_config.action_horizon is not None:
-        os.environ["PIPER_PI05_ACTION_HORIZON"] = str(ft_config.action_horizon)
-
     # all rank workers should register for the modality config
     if ft_config.modality_config_path is not None:
         load_modality_config(ft_config.modality_config_path)
@@ -86,8 +83,6 @@ if __name__ == "__main__":
     config.model.random_rotation_angle = ft_config.random_rotation_angle
     config.model.color_jitter_params = ft_config.color_jitter_params
     config.model.use_percentiles = ft_config.use_percentiles
-    if ft_config.action_horizon is not None:
-        config.model.action_horizon = ft_config.action_horizon
     if (ft_config.shortest_image_edge is None) != (ft_config.crop_fraction is None):
         raise ValueError("shortest_image_edge and crop_fraction must be set together")
     if ft_config.shortest_image_edge is not None:

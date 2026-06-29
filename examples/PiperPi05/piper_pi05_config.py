@@ -14,8 +14,6 @@ The dataset also has cam_vertical, but the deploy client does not provide that
 view, so training on it would make deployment fail strict observation checks.
 """
 
-import os
-
 from gr00t.configs.data.embodiment_configs import register_modality_config
 from gr00t.data.embodiment_tags import EmbodimentTag
 from gr00t.data.types import (
@@ -27,7 +25,7 @@ from gr00t.data.types import (
 )
 
 
-PIPER_PI05_ACTION_HORIZON = int(os.environ.get("PIPER_PI05_ACTION_HORIZON", "40"))
+PIPER_PI05_ACTION_HORIZON = 40
 
 
 piper_pi05_config = {

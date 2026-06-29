@@ -89,7 +89,6 @@ BASE_MODEL_PATH=nvidia/GR00T-N1.7-3B \
 DATASET_PATH=/home/fenrir/ubunto_data_2/worldmodel/data/piper_insert_mouse_battery_lerobot \
 OUTPUT_DIR=/home/fenrir/ubunto_data_2/worldmodel/Isaac-GR00T/outputs/piper_pi05_gr00t \
 MAX_STEPS=10000 \
-ACTION_HORIZON=50 \
 GLOBAL_BATCH_SIZE=8 \
 USE_WANDB=1 \
 WANDB_PROJECT=finetune-gr00t-piper-pi05 \
@@ -111,16 +110,7 @@ For a no-network dry run that still records W&B files locally:
 WANDB_MODE=offline uv run bash examples/PiperPi05/finetune_piper_pi05.sh
 ```
 
-The config predicts 40 GR00T action steps by default. Set `ACTION_HORIZON=50`
-before training if you want the native GR00T output horizon to match the pi05
-client's 50-step chunk:
-
-```bash
-ACTION_HORIZON=50 \
-EXPERIMENT_NAME=piper_pi05_gr00t_h50 \
-OUTPUT_DIR=outputs/piper_pi05_gr00t_h50 \
-uv run bash examples/PiperPi05/finetune_piper_pi05.sh
-```
+The config predicts 40 GR00T action steps by default, matching the N1.7 model config in this checkout.
 
 ## Serve As pi05
 
@@ -160,7 +150,4 @@ _ACTION_CHUNK_SIZE_ORIGIN = 50
 self.ACTION_CHUNK_SIZE = 50
 ```
 
-If the checkpoint was trained with `ACTION_HORIZON=40`, the facade pads the
-shorter GR00T chunk by repeating the last action so the existing client does
-not index past the end. If the checkpoint was trained with `ACTION_HORIZON=50`,
-the native GR00T horizon already matches the pi05 client chunk.
+The facade pads GR00T's shorter chunk by repeating the last action so the existing client does not index past the end. A cleaner later version is to change both client constants to the actual GR00T action horizon and run this server with `--target-horizon 0`.

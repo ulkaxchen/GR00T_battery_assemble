@@ -7,7 +7,6 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
-import os
 from pathlib import Path
 import sys
 
@@ -80,12 +79,6 @@ def main() -> int:
         default=str(Path(__file__).with_name("piper_pi05_config.py")),
     )
     parser.add_argument("--embodiment-tag", default="NEW_EMBODIMENT")
-    parser.add_argument(
-        "--model-action-horizon",
-        type=int,
-        default=int(os.environ.get("PIPER_PI05_ACTION_HORIZON", Gr00tN1d7Config().action_horizon)),
-        help="Model action horizon used for this training run.",
-    )
     parser.add_argument("--require-stats", action="store_true")
     args = parser.parse_args()
 
@@ -131,10 +124,10 @@ def main() -> int:
             failures.append(f"video feature missing from meta/info.json: {original_key}")
 
     action_horizon = len(config["action"].delta_indices)
-    max_action_horizon = args.model_action_horizon
+    max_action_horizon = Gr00tN1d7Config().action_horizon
     if action_horizon > max_action_horizon:
         failures.append(
-            f"action horizon {action_horizon} exceeds configured GR00T N1.7 horizon "
+            f"action horizon {action_horizon} exceeds default GR00T N1.7 horizon "
             f"{max_action_horizon}"
         )
 
